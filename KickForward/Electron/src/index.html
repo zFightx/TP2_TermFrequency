@@ -13,20 +13,22 @@
     <div class="Arquivos">
       <div class="textoFile">
         <p>Escolha o arquivo TXT que deseja verificar:</p>
-        <input id="arquivo" type="file">
+        <label for="arquivo"><p>Escolher</p></label>
+        <input id="arquivo" type="file" onchange="alterou('arquivo_selected', this)">
         <p id="arquivo_selected">Arquivo Selecionado:</p>
       </div>
       <div class="stopFile">
         <p>Escolha o arquivo TXT contendo StopWords:</p>
-        <input id="stopWords" type="file">
-        <p id="stopWords_selected">stopWords Selecionado:</p>
+        <label for="stopWords"><p>Escolher</p></label>
+        <input id="stopWords" type="file" onchange="alterou('stopWords_selected', this)">
+        <p id="stopWords_selected">StopWords Selecionado:</p>
       </div>
     </div>
     <div class="botao">
       <p onclick="main()">Iniciar</p>
     </div>
     <div class="saida">
-      <p id="termFrequency"></p>
+      <div id="termFrequency" class="termFrequency"></div>
       <p id="finish" class="finish"> Aguardando... </p>
     </div>
     <!-- You can also require other files to run in this process -->

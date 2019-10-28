@@ -3,11 +3,22 @@ function noOp(){
 }
 
 function print_text(words, func){
-    for ( var i = 0 ; i < words.length; i++){
-        document.getElementById('termFrequency').innerHTML = document.getElementById('termFrequency').innerHTML + words[i][0] + " : " + words[i][1] + "<br>";
+    if (words.length > 0){
+        var maior = words[0][1];
+
+        for ( var i = 0 ; i < words.length; i++){
+            var porcento = words[i][1]*100/maior;
+            document.getElementById('termFrequency').innerHTML = document.getElementById('termFrequency').innerHTML + 
+            // "<span class=\"word-left\">"+ words[i][0] + "</span><div class=\"progressBar\" style=\"height:14px;width:"+ porcento +"%\"></div> " + "<span class=\"word-right\">" + words[i][1] + "</span><br>";
+            "<div class=\"Word\">" +
+            "<p>"+ words[i][0] + "</p>" +
+            "<div class=\"progressBar\" style=\"width:"+ 100 +"%; height:10px\"><div class=\"barFill\"></div></div>" +
+            "<p class=\"word-right\">"+ words[i][1] + "</p>" +
+            "</div>";
+        }
     }
 
-    func(null);
+    func();
 }
 
 function sort(words, func){
@@ -46,10 +57,6 @@ function remove_stop_words(words, func){
     if(arquivo.files){
         var stopwords;
         var file = arquivo.files[0];
-        document.getElementById('stopWords_selected').innerHTML =
-                                '  nome do arquivo: '+file.name +
-                                ';  tipo do arquivo: '+file.type +
-                                ';  tamanho do arquivo: '+file.size + ' bytes';
                                 
         var reader = new FileReader();
 
@@ -58,11 +65,12 @@ function remove_stop_words(words, func){
             stopwords = reader.result;
             var split_quebra = stopwords.split('\n');
             var words_limpas = [];
+            
             for(var i = 0; i < words.length; i++){
                 var encontrou = false;
                 for(var j = 0; j < split_quebra.length; j++){
                     
-                    if(split_quebra[j] == words[i]){
+                    if(split_quebra[j].trim() == words[i]){
                         encontrou = true;
                     }
                 }
@@ -104,10 +112,6 @@ function read_file(func){
     if(arquivo.files){
         var words;
         var file = arquivo.files[0];
-        document.getElementById('arquivo_selected').innerHTML =
-                                '  nome do arquivo: '+file.name +
-                                ';  tipo do arquivo: '+file.type +
-                                ';  tamanho do arquivo: '+file.size + ' bytes'
 
         var reader = new FileReader();
 
@@ -122,6 +126,11 @@ function read_file(func){
 }
 
 function main(){
+    document.getElementById('termFrequency').innerHTML = "";
     read_file(filter_chars);
     document.getElementById('finish').innerHTML = "Finalizado!";
+}
+
+function alterou(id, objeto){
+    document.getElementById(id).innerHTML = "Selecionado: " + objeto.files[0].name;
 }
